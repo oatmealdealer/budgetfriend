@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  api:
+    image: budgetfriend
+    container_name: budgetfriend-api
+    build:
+      context: ./budgetfriend
+      dockerfile: ./Dockerfile
+    command: pipenv run python -m uvicorn budgetfriend:app --host 0.0.0.0 --reload
+    ports:
+      - "8005:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./budgetfriend/budgetfriend:/app/budgetfriend
+    environment:
+      MONGODB_URI: "mongodb://${MONGO_USER}:${MONGO_PASS}@mongo/"
+  mongo:
+    image: mongo:latest
+    container_name: budgetfriend-mongo
+    ports:
+      - "27018:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "${MONGO_USER}"
+      MONGO_INITDB_ROOT_PASSWORD: "${MONGO_PASS}"
