@@ -11,11 +11,11 @@ ENV PIPENV_VENV_IN_PROJECT=1
 
 # Use Pipenv for dependency management
 RUN python -m pip install pipenv
-COPY Pipfile .
-COPY Pipfile.lock .
 
 WORKDIR /app
-COPY . /app
+COPY Pipfile .
+COPY Pipfile.lock .
+COPY app .
 
 # Switching to a non-root user, please refer to https://aka.ms/vscode-docker-python-user-rights
 RUN useradd appuser && chown -R appuser /app

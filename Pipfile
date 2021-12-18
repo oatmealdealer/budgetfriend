@@ -4,12 +4,17 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-motor = "*"
-odmantic = "*"
 fastapi = "*"
 uvicorn = "*"
+pydantic = "*"
+aiohttp = "*"
+asyncpg = "*"
+databases = {extras = ["postgresql"], version = "*"}
+sqlalchemy = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
+ipykernel = "*"
 
 [requires]
 python_version = "3.9"

@@ -5,15 +5,15 @@ services:
     image: budgetfriend
     container_name: budgetfriend-api
     build:
-      context: ./budgetfriend
+      context: ./
       dockerfile: ./Dockerfile
-    command: pipenv run python -m uvicorn budgetfriend:app --host 0.0.0.0 --reload
+    command: pipenv run python -m uvicorn app:api --host 0.0.0.0 --reload
     ports:
       - "8005:8000"
     env_file:
       - .env
     volumes:
-      - ./budgetfriend/budgetfriend:/app/budgetfriend
+      - ./app:/app/app
     environment:
       MONGODB_URI: "mongodb://${MONGO_USER}:${MONGO_PASS}@mongo/"
   mongo:
@@ -24,3 +24,20 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: "${MONGO_USER}"
       MONGO_INITDB_ROOT_PASSWORD: "${MONGO_PASS}"
+  postgres:
+    image: postgres
+    container_name: budgetfriend-pg
+    environment:
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+    command: postgres -c listen_addresses="*"
+    ports:
+      - "5432:5432"
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: budgetfriend-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "${DEVELOPER_EMAIL}"
+      PGADMIN_DEFAULT_PASSWORD: "${POSTGRES_DB}"
+    ports:
+      - "4321:80"
