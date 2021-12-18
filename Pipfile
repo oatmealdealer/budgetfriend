@@ -5,13 +5,14 @@ name = "pypi"
 
 [packages]
 fastapi = "*"
-uvicorn = "*"
+uvicorn = {extras = ["standard"], version = "*"}
 pydantic = "*"
 aiohttp = "*"
 asyncpg = "*"
 databases = {extras = ["postgresql"], version = "*"}
 sqlalchemy = "*"
 psycopg2-binary = "*"
+strawberry-graphql = {extras = ["fastapi"], version = "*"}
 
 [dev-packages]
 ipykernel = "*"
