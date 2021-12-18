@@ -1,13 +1,15 @@
 from datetime import datetime
 from os import getenv
-from typing import List, Optional
+from typing import Optional
 
 from pydantic import BaseModel, validator
 
 import databases
 import sqlalchemy
 
-DATABASE_URL: str = getenv("DATABASE_URL")
+DATABASE_URL: Optional[str] = getenv("DATABASE_URL")
+assert DATABASE_URL is not None
+
 database = databases.Database(DATABASE_URL)
 metadata = sqlalchemy.MetaData()
 
